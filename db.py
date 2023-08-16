@@ -9,26 +9,41 @@ db = client.jungle                        # 'jungle'라는 이름의 db를 만�
 # db.users.insert_one({'name':'kay','age':27})
 # db.users.insert_one({'name':'john','age':30})
 # MongoDB에서 데이터 모두 보기
-all_users = list(db.users.find({}))
 
-# 참고) MongoDB에서 특정 조건의 데이터 모두 보기
-same_ages = list(db.users.find({'age':21}))
+# db.games.insert_one({'name':'League of legends','id' : '손가든'})
+# db.games.insert_one({'name':'MapleStory','id' : '죽창으로찔러'})
+# all_users = list(db.users.find({}))
+all_games = list(db.games.find({}))
+# # 참고) MongoDB에서 특정 조건의 데이터 모두 보기
+# same_ages = list(db.users.find({'age':21}))
+same_ids = list(db.games.find({'id':'죽창으로찔러'}))
+print(all_games[0])
+print(all_games[0]['name'])
 
-print(all_users[0])         # 0번째 결과값을 보기
-print(all_users[0]['name']) # 0번째 결과값의 'name'을 보기
+for game in all_games:
+    print(game)
+# print(all_users[0])         # 0번째 결과값을 보기
+# print(all_users[0]['name']) # 0번째 결과값의 'name'을 보기
 
-for user in all_users:      # 반복문을 돌며 모든 결과값을 보기
-    print(user)
+# for user in all_users:      # 반복문을 돌며 모든 결과값을 보기
+#     print(user)
 
+game = db.games.find_one({'name':'League of legends'} , {'_id':False})
+print(game)
 
-user = db.users.find_one({'name':'bobby'})
-print(user)
+db.games.update_one({'name':'MapleStory'},{'$set':{'id':'죽창으로 찔러'}})
+game = db.games.find_one({'name':'MapleStory'},{'_id':False})
+print(game)
+# user = db.users.find_one({'name':'bobby'})
+# print(user)
 
-# 그 중 특정 키 값을 빼고 보기
-user = db.users.find_one({'name':'bobby'},{'_id':False})
-print(user)
+# # 그 중 특정 키 값을 빼고 보기
+# user = db.users.find_one({'name':'bobby'},{'_id':False})
+# print(user)
 
-db.users.delete_one({'name':'bobby'}) # 중복된 데이터가 여러개 일 경우 하나씩 사라짐
+# db.users.delete_one({'name':'bobby'}) # 중복된 데이터가 여러개 일 경우 하나씩 사라짐
 
-user = db.users.find_one({'name':'bobby'})
-print(user)
+# user = db.users.find_one({'name':'bobby'})
+# print(user)
+# db.games.delete_many({})
+
